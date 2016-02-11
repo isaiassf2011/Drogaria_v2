@@ -9,7 +9,7 @@ public class FabricanteDAOTest {
 	@Test
 	public void salvar(){
 		Fabricante fabricante = new Fabricante();
-		fabricante.setNome("Aché");
+		fabricante.setNome("Teste");
 		
 		FabricanteDAO fabricanteDAO = new FabricanteDAO();
 		fabricanteDAO.salvar(fabricante);

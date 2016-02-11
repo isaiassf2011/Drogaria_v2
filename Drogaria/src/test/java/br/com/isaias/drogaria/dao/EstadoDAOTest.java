@@ -10,10 +10,9 @@ import br.com.isaias.drogaria.domain.Estado;
 public class EstadoDAOTest {
 
 	@Test
-	@Ignore
 	public void salvar() {
 		Estado estado = new Estado();
-		estado.setNome("São Paulo");
+		estado.setNome("Santa Catarina");
 		estado.setSigla("SC");
 		EstadoDAO estadoDAO = new EstadoDAO();
 		estadoDAO.salvar(estado);
@@ -47,6 +46,7 @@ public class EstadoDAOTest {
 	}
 	
 	@Test
+	@Ignore
 	public void editar(){
 		EstadoDAO estadoDAO = new EstadoDAO();
 		Estado estado = estadoDAO.buscar(4L);
