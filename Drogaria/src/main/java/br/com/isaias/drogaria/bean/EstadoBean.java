@@ -6,6 +6,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.event.ActionEvent;
 
 import org.omnifaces.util.Messages;
 
@@ -55,15 +56,34 @@ public class EstadoBean implements Serializable {
 	public void salvar() {
 		try {
 			EstadoDAO estadoDAO = new EstadoDAO();
-			estadoDAO.salvar(estado);
+			estadoDAO.merge(estado);
 
 			novo();
+			listar();
 			Messages.addGlobalInfo("Estado salvo com sucesso");
 		} catch (RuntimeException erro) {
 			Messages.addGlobalError("Ocorreu um erro ao tentar salvar o estado");
 			erro.printStackTrace();
 		}
 
+	}
+	
+	public void excluir(ActionEvent evento){
+		try {
+			estado = (Estado) evento.getComponent().getAttributes().get("estadoSelecionado");
+			EstadoDAO estadoDAO = new EstadoDAO();
+			estadoDAO.excluir(estado);
+
+			listar();
+			Messages.addGlobalInfo("Estado excluido com sucesso");
+		} catch (RuntimeException erro) {
+			Messages.addGlobalError("Ocorreu um erro ao tentar excluir o estado");
+			erro.printStackTrace();
+		}
+	}
+	
+	public void editar(ActionEvent evento) {
+		estado = (Estado) evento.getComponent().getAttributes().get("estadoSelecionado");
 	}
 
 }
