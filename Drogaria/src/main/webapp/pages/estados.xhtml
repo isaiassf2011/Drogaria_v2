@@ -39,11 +39,10 @@
 							icon="ui-icon-alert" />
 						<f:attribute name="estadoSelecionado" value="#{estado}" />
 					</p:commandButton>
-					<p:commandButton icon="ui-icon-pencil" 
+					<p:commandButton icon="ui-icon-pencil"
 						oncomplete="PF('dialogo').show();"
 						actionListener="#{estadoBean.editar}"
-						update=":formCadastro:painel"
-						>
+						update=":formCadastro:painel">
 						<f:attribute name="estadoSelecionado" value="#{estado}" />
 					</p:commandButton>
 				</p:column>

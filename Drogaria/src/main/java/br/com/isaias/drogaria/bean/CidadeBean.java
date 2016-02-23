@@ -52,7 +52,7 @@ public class CidadeBean implements Serializable {
 		try{
 			cidade = new Cidade();
 			EstadoDAO estadoDAO = new EstadoDAO();
-			estados = estadoDAO.listar();
+			estados = estadoDAO.listar("nome");
 		} catch (RuntimeException erro) {
 			Messages.addFlashGlobalError("Ocorreu um erro ao gerar uma nova cidade");
 			erro.printStackTrace();
@@ -103,7 +103,7 @@ public class CidadeBean implements Serializable {
 		try{
 			cidade = (Cidade) evento.getComponent().getAttributes().get("cidadeSelecionada");
 			EstadoDAO estadoDAO = new EstadoDAO();
-			estados = estadoDAO.listar();
+			estados = estadoDAO.listar("nome");
 		} catch (RuntimeException erro) {
 			Messages.addFlashGlobalError("Ocorreu um erro ao tentar selecionar uma cidade");
 			erro.printStackTrace();
