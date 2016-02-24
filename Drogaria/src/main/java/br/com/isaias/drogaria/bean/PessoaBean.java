@@ -14,11 +14,9 @@ import org.omnifaces.util.Messages;
 import br.com.isaias.drogaria.dao.CidadeDAO;
 import br.com.isaias.drogaria.dao.EstadoDAO;
 import br.com.isaias.drogaria.dao.PessoaDAO;
-import br.com.isaias.drogaria.dao.ProdutoDAO;
 import br.com.isaias.drogaria.domain.Cidade;
 import br.com.isaias.drogaria.domain.Estado;
 import br.com.isaias.drogaria.domain.Pessoa;
-import br.com.isaias.drogaria.domain.Produto;
 
 @SuppressWarnings("serial")
 @ManagedBean
