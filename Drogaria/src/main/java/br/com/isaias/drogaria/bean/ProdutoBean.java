@@ -1,6 +1,11 @@
 package br.com.isaias.drogaria.bean;
 
+import java.io.IOException;
 import java.io.Serializable;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -9,6 +14,8 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 
 import org.omnifaces.util.Messages;
+import org.primefaces.event.FileUploadEvent;
+import org.primefaces.model.UploadedFile;
 
 import br.com.isaias.drogaria.dao.FabricanteDAO;
 import br.com.isaias.drogaria.dao.ProdutoDAO;
@@ -74,6 +81,7 @@ public class ProdutoBean implements Serializable {
 	public void editar(ActionEvent evento){
 		try {
 			produto = (Produto) evento.getComponent().getAttributes().get("produtoSelecionado");
+			produto.setCaminho("/home/brd03-pc/Desenvolvimento/Uploads/" + produto.getCodigo() + ".jpg");
 
 			FabricanteDAO fabricanteDAO = new FabricanteDAO();
 			fabricantes = fabricanteDAO.listar();
@@ -85,9 +93,19 @@ public class ProdutoBean implements Serializable {
 	
 	public void salvar() {
 		try {
+			
+			if(produto.getCaminho() == null){
+				Messages.addGlobalError("O campo foto é obrigatório");
+				return;
+			}
+			
 			ProdutoDAO produtoDAO = new ProdutoDAO();
-			produtoDAO.merge(produto);
+			Produto produtoRetorno = produtoDAO.merge(produto);
 
+			Path origem = Paths.get(produto.getCaminho());
+			Path destino = Paths.get("/home/brd03-pc/Desenvolvimento/Uploads/" + produtoRetorno.getCodigo() + ".jpg");
+			Files.copy(origem, destino, StandardCopyOption.REPLACE_EXISTING);
+			
 			produto = new Produto();
 
 			FabricanteDAO fabricanteDAO = new FabricanteDAO();
@@ -96,7 +114,7 @@ public class ProdutoBean implements Serializable {
 			produtos = produtoDAO.listar();
 
 			Messages.addGlobalInfo("Produto salvo com sucesso");
-		} catch (RuntimeException erro) {
+		} catch (RuntimeException | IOException erro) {
 			Messages.addFlashGlobalError("Ocorreu um erro ao tentar salvar o produto");
 			erro.printStackTrace();
 		}
@@ -109,13 +127,31 @@ public class ProdutoBean implements Serializable {
 			ProdutoDAO produtoDAO = new ProdutoDAO();
 			produtoDAO.excluir(produto);
 
+			Path arquivo = Paths.get("/home/brd03-pc/Desenvolvimento/Uploads/" + produto.getCodigo() + ".jpg");
+			Files.deleteIfExists(arquivo);
+			
 			produtos = produtoDAO.listar();
 
 			Messages.addGlobalInfo("Produto removido com sucesso");
-		} catch (RuntimeException erro) {
+		} catch (RuntimeException | IOException erro) {
 			Messages.addFlashGlobalError("Ocorreu um erro ao tentar remover o produto");
 			erro.printStackTrace();
 		}
+	}
+	
+	public void upload(FileUploadEvent evento){
+		try {
+			UploadedFile arquivoUpload = evento.getFile();
+			Path arquivoTemp = Files.createTempFile(null, null);
+			Files.copy(arquivoUpload.getInputstream(), arquivoTemp, StandardCopyOption.REPLACE_EXISTING);
+			produto.setCaminho(arquivoTemp.toString());
+			
+			Messages.addGlobalInfo("Upload realizado com sucesso");
+		} catch (IOException e) {
+			Messages.addGlobalInfo("Ocorreu um erro ao tentar realizar o upload de arquivo");
+			e.printStackTrace();
+		}
+		
 	}
 
 }
