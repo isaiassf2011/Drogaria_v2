@@ -6,6 +6,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import br.com.isaias.drogaria.domain.ItemVenda;
+import br.com.isaias.drogaria.domain.Produto;
 import br.com.isaias.drogaria.domain.Venda;
 import br.com.isaias.drogaria.util.HibernateUtil;
 
@@ -25,6 +26,11 @@ public class VendaDAO extends GenericDAO<Venda>{
 				itemVenda.setVenda(venda);
 				
 				sessao.save(itemVenda);
+				
+				Produto produto = itemVenda.getProduto();
+				produto.setQuantidade(new Short((produto.getQuantidade() - itemVenda.getQuantidade()) + ""));
+				
+				sessao.update(produto);
 			}
 			
 			transacao.commit();
