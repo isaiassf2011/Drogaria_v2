@@ -44,6 +44,8 @@
 		<mapping class="br.com.isaias.drogaria.domain.Venda" />
 		<mapping class="br.com.isaias.drogaria.domain.ItemVenda" />
 		<mapping class="br.com.isaias.drogaria.domain.Historico" />
+		<mapping class="br.com.isaias.drogaria.domain.Caixa" />
+		<mapping class="br.com.isaias.drogaria.domain.Movimentacao" />
 
 	</session-factory>
 

@@ -57,12 +57,16 @@
 			<h:form id="formCadastro">
 				<h:panelGrid id="painel" columns="2">
 					<p:outputLabel value="Nome:" />
-					<p:inputText maxlength="50" size="30"
-						value="#{estadoBean.estado.nome}" />
+					<p:inputText id="nome" maxlength="50" size="30"
+						value="#{estadoBean.estado.nome}" converter="upperCaseConverter">
+						<p:ajax event="blur" update=":formCadastro:nome" />
+					</p:inputText>
 	
 					<p:outputLabel value="Sigla:" />
 					<p:inputText maxlength="2" size="10"
-						value="#{estadoBean.estado.sigla}" />
+						value="#{estadoBean.estado.sigla}" converter="upperCaseConverter">
+						<p:ajax event="blur" update="@this" />
+					</p:inputText>
 				</h:panelGrid>
 	
 				<h:panelGrid columns="2">
