@@ -1,4 +1,4 @@
-package DrogariaResourceConfig;
+package br.com.isaias.drogaria.util;
 
 import javax.ws.rs.ApplicationPath;
 

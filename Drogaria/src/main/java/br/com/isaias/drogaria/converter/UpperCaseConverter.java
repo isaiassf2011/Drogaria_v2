@@ -1,4 +1,4 @@
-package UpperCaseConverter;
+package br.com.isaias.drogaria.converter;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
